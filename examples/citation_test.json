@@ -1,0 +1,49 @@
+{
+  "aggregators": ["dataaxle", "neustar"],
+  "business_name": "Omni Law",
+  "website_address": "https://omnilaw.com",
+  "campaign_name": "Omni Law Citations Q1 2026",
+  "campaign_country": "United States",
+  "campaign_state": "California",
+  "campaign_city": "Los Angeles",
+  "postcode": "90001",
+  "address1": "1900 Firestone Blvd",
+  "contact_telephone": "(317) 658-0659",
+  "business_category_id": 651,
+  "employees_number": 10,
+  "brief_description": "Premier Los Angeles law firm providing comprehensive legal services",
+  "full_description": "Omni Law P.C. is a premier Los Angeles law firm providing comprehensive legal services across business law, corporate governance, real estate, immigration, employment, tax, bankruptcy, and estate planning. Our experienced attorneys deliver strategic, results-driven counsel to individuals, families, and businesses throughout Southern California.",
+  "location_id": 271,
+  "opening_hours": {
+    "regular": {
+      "mon": {
+        "status": "open",
+        "hours": [{"start": "09:00", "end": "18:00"}]
+      },
+      "tue": {
+        "status": "open",
+        "hours": [{"start": "09:00", "end": "18:00"}]
+      },
+      "wed": {
+        "status": "open",
+        "hours": [{"start": "09:00", "end": "18:00"}]
+      },
+      "thu": {
+        "status": "open",
+        "hours": [{"start": "09:00", "end": "18:00"}]
+      },
+      "fri": {
+        "status": "open",
+        "hours": [{"start": "09:00", "end": "17:00"}]
+      },
+      "sat": {
+        "status": "closed",
+        "hours": []
+      },
+      "sun": {
+        "status": "closed",
+        "hours": []
+      }
+    }
+  }
+}

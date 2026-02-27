@@ -1,0 +1,10 @@
+.env
+.env.local
+.env.*.local
+*.log
+*.swp
+.DS_Store
+node_modules/
+__pycache__/
+*.pyc
+.claude/
