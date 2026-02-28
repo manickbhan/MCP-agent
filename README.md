@@ -4,146 +4,15 @@ Your AI-powered command center for creating and conquering digital empires. This
 
 ## Playbook of Playbooks
 
-> **[View the full interactive diagram (HTML)](playbook-of-playbooks.html)** — Open locally for the complete visual with the SearchAtlas dark theme, color-coded days, namespace tags, and tool coverage breakdown.
+The complete 5-day challenge journey — Pre-Work through Day 5 — with all 15 playbooks, 112 MCP tools, and 17 agent namespaces mapped out.
 
-```mermaid
-flowchart TD
-    HQ["<b>5-Day Digital Empire Blueprint</b><br/><i>15 Playbooks · 112 MCP Tools · 330+ Operations · 17 Agent Namespaces</i>"]
+<p align="center">
+  <a href="playbook-of-playbooks.html">
+    <img src="playbook-of-playbooks.png" alt="5-Day Digital Empire Blueprint — Playbook of Playbooks" width="720">
+  </a>
+</p>
 
-    HQ --> PRE
-
-    subgraph PRE["🟢 PRE-WORK — Setup Foundation"]
-        direction LR
-        P1["Create Account"]
-        P2["Create Project"]
-        P3["Install OTTO SEO"]
-        P4["Add Integrations<br/><i>GSC · GA4 · GBP · Ads · Social</i>"]
-        P5["Create Brand Vault"]
-        P6["Connect Email"]
-        P7["Connect Social"]
-        P8["Media Library"]
-        P9["Connect GBP"]
-    end
-
-    PRE --> D1
-
-    subgraph D1["🔵 DAY 1 — Establish Your Kingdom"]
-        direction LR
-        D1A["🌐 Website Studio<br/><i>website_studio</i>"]
-        D1B["🏛️ Brand Vault Setup<br/><i>brand_vault</i>"]
-        D1C["📍 GBP Optimization<br/><i>gbp</i>"]
-        D1D["🗺️ Local SEO Foundation<br/><i>local_seo</i>"]
-    end
-
-    D1 --> D2
-
-    subgraph D2["🔷 DAY 2 — Content Domination  ·  8 Playbooks  ·  ~2 hrs"]
-        direction LR
-        D2A["1. Review Brand Vault<br/><i>5 min · orchestrator</i>"]
-        D2B["2. Topical Map Strategy<br/><i>15 min · content_genius</i>"]
-        D2C["3. Quality Content<br/><i>20 min · content_genius</i>"]
-        D2D["4. Best-Of Listicle<br/><i>15 min · content_genius</i>"]
-        D2E["5. Head-to-Head<br/><i>15 min · content_genius</i>"]
-        D2F["6. About Us Page<br/><i>10 min · content_genius</i>"]
-        D2G["7. Industry Leader<br/><i>15 min · content_genius</i>"]
-        D2H["8. GBP Automation<br/><i>15 min · gbp</i>"]
-    end
-
-    D2 --> D2X
-
-    subgraph D2X["DAY 2 — Additional Tools"]
-        direction LR
-        D2X1["Site Lens<br/><i>otto</i>"]
-        D2X2["DKN Review<br/><i>content_genius</i>"]
-        D2X3["SCHOLAR<br/><i>content_genius</i>"]
-        D2X4["URL Indexer<br/><i>indexer</i>"]
-        D2X5["Social Schedule<br/><i>gbp</i>"]
-        D2X6["Local Pages<br/><i>website_studio</i>"]
-    end
-
-    D2X --> D3
-
-    subgraph D3["🔴 DAY 3 — Build Your Alliance Network  ·  7 Playbooks  ·  ~2 hrs"]
-        direction LR
-        D3A["9. Brand Vault Check<br/><i>5 min · orchestrator</i>"]
-        D3B["10. Press Releases<br/><i>10 min · press_release</i>"]
-        D3C["11. Cloud Stack<br/><i>10 min · cloud_stack</i>"]
-        D3D["12. Guest Posts<br/><i>15 min · linklab</i>"]
-        D3E["13. Local Citations<br/><i>5 min · gbp</i>"]
-        D3F["14. OTTO SEO Deploy<br/><i>15 min · otto</i>"]
-        D3G["15. Publisher Outreach<br/><i>15 min · digital_pr</i>"]
-        D3H["16. Business Outreach<br/><i>15 min · digital_pr</i>"]
-    end
-
-    D3 --> D3X
-
-    subgraph D3X["DAY 3 — Additional Tools"]
-        direction LR
-        D3X1["Site Metrics<br/><i>site_explorer</i>"]
-        D3X2["LLM Prompt Simulator<br/><i>llm_visibility</i>"]
-    end
-
-    D3X --> D4
-
-    subgraph D4["🟠 DAY 4 — Expand Your Reach"]
-        direction LR
-        D4A["📢 Google Ads / PPC<br/><i>otto_ppc</i>"]
-        D4B["📝 Ad Content<br/><i>otto_ppc</i>"]
-        D4C["📍 GBP Posts<br/><i>gbp</i>"]
-        D4D["❤️ Social Amplification<br/><i>social</i>"]
-    end
-
-    D4 --> D5
-
-    subgraph D5["🔷 DAY 5 — Intelligence & Scale"]
-        direction LR
-        D5A["🤖 LLM Visibility<br/><i>llm_visibility</i>"]
-        D5B["📈 Site Explorer<br/><i>site_explorer</i>"]
-        D5C["🗺️ Local Heatmaps<br/><i>local_seo</i>"]
-        D5D["📊 Rankings Monitor<br/><i>site_explorer</i>"]
-    end
-
-    D5 --> TOOLS
-
-    subgraph TOOLS["MCP Tool Coverage — 112 Tools across 13 Categories"]
-        direction LR
-        T1["OTTO SEO · 15"]
-        T2["PPC/Ads · 13"]
-        T3["GBP · 16"]
-        T4["Content Genius · 7"]
-        T5["Site Explorer · 8"]
-        T6["LLM Visibility · 8"]
-        T7["Local SEO · 7"]
-        T8["Digital PR · 4"]
-        T9["Press Release · 4"]
-        T10["Cloud Stack · 4"]
-        T11["LinkLab · 4"]
-        T12["Website Studio · 1"]
-        T13["Brand Vault · 1"]
-    end
-
-    %% Styling
-    classDef header fill:#936BDA22,stroke:#936BDA,stroke-width:2px,color:#AAAAAA
-    classDef prework fill:#4CAF5011,stroke:#4CAF50,stroke-width:1px,color:#81C784
-    classDef day1 fill:#2196F311,stroke:#2196F3,stroke-width:1px,color:#64B5F6
-    classDef day2 fill:#00BCD411,stroke:#00BCD4,stroke-width:1px,color:#4DD0E1
-    classDef day3 fill:#E91E6311,stroke:#E91E63,stroke-width:1px,color:#F48FB1
-    classDef day4 fill:#FF980011,stroke:#FF9800,stroke-width:1px,color:#FFB74D
-    classDef day5 fill:#00BCD411,stroke:#00BCD4,stroke-width:1px,color:#4DD0E1
-    classDef tools fill:#936BDA11,stroke:#936BDA,stroke-width:1px,color:#B89AED
-    classDef extra fill:#FFFFFF08,stroke:#FFFFFF15,stroke-width:1px,stroke-dasharray:5 5,color:#535353
-
-    class HQ header
-    class PRE prework
-    class D1 day1
-    class D2 day2
-    class D2X extra
-    class D3 day3
-    class D3X extra
-    class D4 day4
-    class D5 day5
-    class TOOLS tools
-```
+<p align="center"><i>Click the image to open the <a href="playbook-of-playbooks.html">full interactive HTML version</a> with the SearchAtlas dark theme.</i></p>
 
 ## The 5-Day Empire Blueprint
 
