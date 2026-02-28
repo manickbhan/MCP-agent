@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>5-Day Digital Empire Blueprint — Playbook of Playbooks</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    :root {
+      --accent-color: #936BDA;
+      --canvas-bg: #1A1A1A;
+      --card-bg: rgba(255, 255, 255, 0.03);
+      --text-primary: #AAAAAA;
+      --text-secondary: #535353;
+      --table-bg: rgba(255, 255, 255, 0.02);
+      --table-border: rgba(255, 255, 255, 0.05);
+
+      /* Day-specific accent colors */
+      --day0-accent: #4CAF50;
+      --day1-accent: #2196F3;
+      --day2-accent: #00BCD4;
+      --day3-accent: #E91E63;
+      --day4-accent: #FF9800;
+      --day5-accent: #00BCD4;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--canvas-bg);
+      font-family: 'DM Sans', sans-serif;
+      color: var(--text-primary);
+      padding: 48px 24px;
+      min-height: 100vh;
+    }
+
+    .flowchart-canvas {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* ── Header Node ─────────────────────────────────────────── */
+    .header-node {
+      background: rgba(147, 107, 218, 0.08);
+      border: 1px solid rgba(147, 107, 218, 0.15);
+      border-radius: 20px;
+      padding: 28px 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    .header-icon {
+      font-size: 36px;
+      color: var(--accent-color);
+    }
+
+    .header-node h1 {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text-primary);
+      text-align: center;
+      margin: 0;
+    }
+
+    .header-node .subtitle {
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--text-secondary);
+      text-align: center;
+      margin: 0;
+    }
+
+    /* ── Checkpoint Connector ────────────────────────────────── */
+    .checkpoint-connector {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: -9px 0 4px;
+      position: relative;
+      z-index: 3;
+    }
+
+    .checkpoint-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent-color);
+      box-shadow: 0 0 0 5px rgba(147, 107, 218, 0.25);
+      margin: 3px 0;
+    }
+
+    .connector-line {
+      width: 3px;
+      height: 28px;
+      background: #936BDA;
+      position: relative;
+    }
+
+    .connector-line::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 7px solid transparent;
+      border-right: 7px solid transparent;
+      border-top: 9px solid #936BDA;
+    }
+
+    /* Day-specific connector colors */
+    .day0 .checkpoint-dot { background: var(--day0-accent); box-shadow: 0 0 0 5px rgba(76, 175, 80, 0.25); }
+    .day0 .connector-line { background: var(--day0-accent); }
+    .day0 .connector-line::after { border-top-color: var(--day0-accent); }
+
+    .day1 .checkpoint-dot { background: var(--day1-accent); box-shadow: 0 0 0 5px rgba(33, 150, 243, 0.25); }
+    .day1 .connector-line { background: var(--day1-accent); }
+    .day1 .connector-line::after { border-top-color: var(--day1-accent); }
+
+    .day2 .checkpoint-dot { background: var(--day2-accent); box-shadow: 0 0 0 5px rgba(0, 188, 212, 0.25); }
+    .day2 .connector-line { background: var(--day2-accent); }
+    .day2 .connector-line::after { border-top-color: var(--day2-accent); }
+
+    .day3 .checkpoint-dot { background: var(--day3-accent); box-shadow: 0 0 0 5px rgba(233, 30, 99, 0.25); }
+    .day3 .connector-line { background: var(--day3-accent); }
+    .day3 .connector-line::after { border-top-color: var(--day3-accent); }
+
+    .day4 .checkpoint-dot { background: var(--day4-accent); box-shadow: 0 0 0 5px rgba(255, 152, 0, 0.25); }
+    .day4 .connector-line { background: var(--day4-accent); }
+    .day4 .connector-line::after { border-top-color: var(--day4-accent); }
+
+    .day5 .checkpoint-dot { background: var(--day5-accent); box-shadow: 0 0 0 5px rgba(0, 188, 212, 0.25); }
+    .day5 .connector-line { background: var(--day5-accent); }
+    .day5 .connector-line::after { border-top-color: var(--day5-accent); }
+
+    /* ── Step Label ──────────────────────────────────────────── */
+    .step-label {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: var(--accent-color);
+      margin: 4px 0 8px;
+      text-align: center;
+    }
+
+    .step-label.day0 { color: var(--day0-accent); }
+    .step-label.day1 { color: var(--day1-accent); }
+    .step-label.day2 { color: var(--day2-accent); }
+    .step-label.day3 { color: var(--day3-accent); }
+    .step-label.day4 { color: var(--day4-accent); }
+    .step-label.day5 { color: var(--day5-accent); }
+
+    .step-label .step-meta {
+      display: block;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.5px;
+      color: var(--text-secondary);
+      margin-top: 4px;
+      text-transform: none;
+    }
+
+    /* ── Group Container ─────────────────────────────────────── */
+    .group-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding: 16px 16px 20px;
+      border-radius: 16px;
+      border: 1.5px solid var(--table-border);
+      background: var(--table-bg);
+      width: fit-content;
+      max-width: 100%;
+      margin: 0;
+      position: relative;
+      z-index: 1;
+      justify-content: center;
+    }
+
+    .group-container.day0 { border-color: rgba(76, 175, 80, 0.12); }
+    .group-container.day1 { border-color: rgba(33, 150, 243, 0.12); }
+    .group-container.day2 { border-color: rgba(0, 188, 212, 0.12); }
+    .group-container.day3 { border-color: rgba(233, 30, 99, 0.12); }
+    .group-container.day4 { border-color: rgba(255, 152, 0, 0.12); }
+    .group-container.day5 { border-color: rgba(0, 188, 212, 0.12); }
+
+    /* ── Inner Card ──────────────────────────────────────────── */
+    .inner-card {
+      background: var(--card-bg);
+      border: none;
+      border-radius: 12px;
+      padding: 14px;
+      min-width: 150px;
+      max-width: 220px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .card-icon {
+      width: 32px;
+      height: 32px;
+      border: 1px solid var(--accent-color);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 10px;
+    }
+
+    .card-icon i {
+      font-size: 14px;
+      color: white;
+    }
+
+    /* Day-specific card icon borders */
+    .day0 .card-icon { border-color: var(--day0-accent); }
+    .day1 .card-icon { border-color: var(--day1-accent); }
+    .day2 .card-icon { border-color: var(--day2-accent); }
+    .day3 .card-icon { border-color: var(--day3-accent); }
+    .day4 .card-icon { border-color: var(--day4-accent); }
+    .day5 .card-icon { border-color: var(--day5-accent); }
+
+    .card-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+
+    .card-description {
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--text-secondary);
+      line-height: 1.4;
+    }
+
+    .card-badge {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 10px;
+      margin-top: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .badge-playbook {
+      background: rgba(147, 107, 218, 0.15);
+      color: var(--accent-color);
+    }
+
+    .badge-tool {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-secondary);
+    }
+
+    .badge-time {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-secondary);
+      font-weight: 400;
+    }
+
+    /* ── Stats Bar ───────────────────────────────────────────── */
+    .stats-bar {
+      display: flex;
+      gap: 24px;
+      margin-top: 8px;
+      padding: 16px 32px;
+      background: rgba(147, 107, 218, 0.05);
+      border: 1px solid rgba(147, 107, 218, 0.1);
+      border-radius: 12px;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-value {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--accent-color);
+    }
+
+    .stat-label {
+      font-size: 11px;
+      font-weight: 400;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+
+    /* ── Namespace Tags ──────────────────────────────────────── */
+    .namespace-row {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 6px;
+    }
+
+    .ns-tag {
+      font-size: 9px;
+      font-weight: 600;
+      padding: 1px 6px;
+      border-radius: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+
+    .ns-otto { background: rgba(147, 107, 218, 0.15); color: #B89AED; }
+    .ns-content { background: rgba(0, 188, 212, 0.15); color: #4DD0E1; }
+    .ns-gbp { background: rgba(76, 175, 80, 0.15); color: #81C784; }
+    .ns-pr { background: rgba(233, 30, 99, 0.15); color: #F48FB1; }
+    .ns-explorer { background: rgba(33, 150, 243, 0.15); color: #64B5F6; }
+    .ns-ppc { background: rgba(255, 152, 0, 0.15); color: #FFB74D; }
+    .ns-llm { background: rgba(0, 188, 212, 0.15); color: #4DD0E1; }
+    .ns-linklab { background: rgba(0, 188, 212, 0.15); color: #4DD0E1; }
+    .ns-cloud { background: rgba(33, 150, 243, 0.15); color: #64B5F6; }
+    .ns-website { background: rgba(33, 150, 243, 0.15); color: #64B5F6; }
+    .ns-indexer { background: rgba(33, 150, 243, 0.15); color: #64B5F6; }
+
+    /* ── Responsive ──────────────────────────────────────────── */
+    @media (max-width: 768px) {
+      .group-container {
+        flex-direction: column;
+        width: 100%;
+      }
+      .inner-card {
+        max-width: 100%;
+      }
+      .stats-bar {
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="flowchart-canvas">
+
+    <!-- ═══════════════════════════════════════════════════════════
+         HEADER NODE
+         ═══════════════════════════════════════════════════════════ -->
+    <div class="header-node">
+      <i class="fa-solid fa-chess-queen header-icon"></i>
+      <h1>5-Day Digital Empire Blueprint</h1>
+      <div class="subtitle">Playbook of Playbooks — AI Search & Agentic Marketing Summit</div>
+    </div>
+
+    <!-- Stats Bar -->
+    <div style="margin-top: 16px;"></div>
+    <div class="stats-bar">
+      <div class="stat-item">
+        <div class="stat-value">5</div>
+        <div class="stat-label">Days</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">15</div>
+        <div class="stat-label">Playbooks</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">112</div>
+        <div class="stat-label">MCP Tools</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">330+</div>
+        <div class="stat-label">Operations</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">17</div>
+        <div class="stat-label">Agent Namespaces</div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         PRE-WORK — SETUP FOUNDATION
+         ═══════════════════════════════════════════════════════════ -->
+    <div class="checkpoint-connector day0">
+      <div class="checkpoint-dot"></div>
+      <div class="connector-line"></div>
+    </div>
+
+    <div class="step-label day0">
+      PRE-WORK — SETUP FOUNDATION
+      <span class="step-meta">9 setup tasks &middot; Account, Integrations, Brand Vault</span>
+    </div>
+
+    <div class="group-container day0">
+      <div class="inner-card">
+        <div class="card-icon"><i class="fa-solid fa-user-plus"></i></div>
+        <div class="card-title">Create Account</div>
+        <div class="card-description">SearchAtlas trial or full account</div>
+      </div>
+      <div class="inner-card">
+        <div class="card-icon"><i class="fa-solid fa-folder-plus"></i></div>
+        <div class="card-title">Create Project</div>
+        <div class="card-description">Atlas Brain project setup</div>
+      </div>
+      <div class="inner-card">
+        <div class="card-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+        <div class="card-title">Install OTTO SEO</div>
+        <div class="card-description">Pixel or Cloudflare Worker</div>
+      </div>
+      <div class="inner-card">
+        <div class="card-icon"><i class="fa-solid fa-plug"></i></div>
+        <div class="card-title">Add Integrations</div>
+        <div class="card-description">GSC, GA4, GBP, Google Ads, Social</div>
+      </div>
+      <div class="inner-card">
+        <div class="card-icon"><i class="fa-solid fa-vault"></i></div>
+        <div class="card-title">Create Brand Vault</div>
+        <div class="card-description">Company info, voice, identity</div>
+      </div>
+      <div class="inner-card">
+        <div class="card-icon"><i class="fa-solid fa-envelope"></i></div>
+        <div class="card-title">Connect Email</div>
+        <div class="card-description">Digital PR outreach ready</div>
+      </div>
+      <div class="inner-card">
+        <div class="card-icon"><i class="fa-solid fa-share-nodes"></i></div>
+        <div class="card-title">Connect Social</div>
+        <div class="card-description">Facebook, Instagram, X</div>
+      </div>
+      <div class="inner-card">
+        <div class="card-icon"><i class="fa-solid fa-images"></i></div>
+        <div class="card-title">Media Library</div>
+        <div class="card-description">Upload logos and photos</div>
+      </div>
+      <div class="inner-card">
+        <div class="card-icon"><i class="fa-solid fa-location-dot"></i></div>
+        <div class="card-title">Connect GBP</div>
+        <div class="card-description">GBP Galactic integration</div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         DAY 1 — ESTABLISH YOUR KINGDOM
+         ═══════════════════════════════════════════════════════════ -->
+    <div class="checkpoint-connector day1">
+      <div class="checkpoint-dot"></div>
+      <div class="connector-line"></div>
+    </div>
+
+    <div class="step-label day1">
+      DAY 1 — ESTABLISH YOUR KINGDOM
+      <span class="step-meta">Build your digital HQ, lock in brand identity, claim territory on Google</span>
+    </div>
+
+    <div class="group-container day1">
+      <div class="inner-card">
+        <div class="card-icon"><i class="fa-solid fa-code"></i></div>
+        <div class="card-title">Website Studio</div>
+        <div class="card-description">AI-powered site generation and local service pages</div>
+        <div class="namespace-row">
+          <span class="ns-tag ns-website">website_studio</span>
+        </div>
+      </div>
+      <div class="inner-card">
+        <div class="card-icon"><i class="fa-solid fa-vault"></i></div>
+        <div class="card-title">Brand Vault Setup</div>
+        <div class="card-description">Complete brand identity, voice profile, knowledge graph</div>
+        <div class="namespace-row">
+          <span class="ns-tag ns-content">brand_vault</span>
+        </div>
+      </div>
+      <div class="inner-card">
+        <div class="card-icon"><i class="fa-solid fa-location-dot"></i></div>
+        <div class="card-title">GBP Optimization</div>
+        <div class="card-description">Claim and optimize Google Business Profile</div>
+        <div class="namespace-row">
+          <span class="ns-tag ns-gbp">gbp</span>
+        </div>
+      </div>
+      <div class="inner-card">
+        <div class="card-icon"><i class="fa-solid fa-map-location-dot"></i></div>
+        <div class="card-title">Local SEO Foundation</div>
+        <div class="card-description">Heatmap tracking, citation baseline, local rank setup</div>
+        <div class="namespace-row">
+          <span class="ns-tag ns-gbp">local_seo</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         DAY 2 — CONTENT DOMINATION
+         ═══════════════════════════════════════════════════════════ -->
+    <div class="checkpoint-connector day2">
+      <div class="checkpoint-dot"></div>
+      <div class="connector-line"></div>
+    </div>
+
+    <div class="step-label day2">
+      DAY 2 — CONTENT DOMINATION
+      <span class="step-meta">8 playbooks &middot; 14 action items &middot; ~2 hours &middot; Flood the SERPs with authority content</span>
+    </div>
+
+    <div class="group-container day2">
+      <!-- Playbook 1 -->
+      <div class="inner-card">
+        <div class="card-icon"><i class="fa-solid fa-vault"></i></div>
+        <div class="card-title">Review Brand Vault</div>
+        <div class="card-description">Audit completeness, fix missing fields</div>
+        <span class="card-badge badge-time">5 min</span>
+        <div class="namespace-row">
+          <span class="ns-tag ns-otto">orchestrator</span>
+        </div>
+      </div>
+      <!-- Playbook 2 -->
+      <div class="inner-card">
+        <div class="card-icon"><i class="fa-solid fa-sitemap"></i></div>
+        <div class="card-title">Topical Map Strategy</div>
+        <div class="card-description">100-topic content plan from seed keyword</div>
+        <span class="card-badge badge-time">15 min</span>
+        <div class="namespace-row">
+          <span class="ns-tag ns-content">content_genius</span>
+        </div>
+      </div>
+      <!-- Playbook 3 -->
+      <div class="inner-card">
+        <div class="card-icon"><i class="fa-solid fa-feather-pointed"></i></div>
+        <div class="card-title">Quality Content</div>
+        <div class="card-description">End-to-end content strategy, DKN + topical maps</div>
+        <span class="card-badge badge-time">20 min</span>
+        <div class="namespace-row">
+          <span class="ns-tag ns-content">content_genius</span>
+        </div>
+      </div>
+      <!-- Playbook 4 -->
+      <div class="inner-card">
+        <div class="card-icon"><i class="fa-solid fa-trophy"></i></div>
+        <div class="card-title">Best-Of Listicle</div>
+        <div class="card-description">Rank #1 in evidence-based competitor listicle</div>
+        <span class="card-badge badge-time">15 min</span>
+        <div class="namespace-row">
+          <span class="ns-tag ns-content">content_genius</span>
+        </div>
+      </div>
+      <!-- Playbook 5 -->
+      <div class="inner-card">
+        <div class="card-icon"><i class="fa-solid fa-scale-balanced"></i></div>
+        <div class="card-title">Head-to-Head</div>
+        <div class="card-description">Structured comparison vs key competitor</div>
+        <span class="card-badge badge-time">15 min</span>
+        <div class="namespace-row">
+          <span class="ns-tag ns-content">content_genius</span>
+        </div>
+      </div>
+      <!-- Playbook 6 -->
+      <div class="inner-card">
+        <div class="card-icon"><i class="fa-solid fa-building"></i></div>
+        <div class="card-title">About Us Page</div>
+        <div class="card-description">Citation-backed E-E-A-T company profile</div>
+        <span class="card-badge badge-time">10 min</span>
+        <div class="namespace-row">
+          <span class="ns-tag ns-content">content_genius</span>
+        </div>
+      </div>
+      <!-- Playbook 7 -->
+      <div class="inner-card">
+        <div class="card-icon"><i class="fa-solid fa-award"></i></div>
+        <div class="card-title">Industry Leader</div>
+        <div class="card-description">Professional editorial review article</div>
+        <span class="card-badge badge-time">15 min</span>
+        <div class="namespace-row">
+          <span class="ns-tag ns-content">content_genius</span>
+        </div>
+      </div>
+      <!-- Playbook 8 -->
+      <div class="inner-card">
+        <div class="card-icon"><i class="fa-solid fa-robot"></i></div>
+        <div class="card-title">GBP Automation</div>
+        <div class="card-description">Auto review responses + weekly posting</div>
+        <span class="card-badge badge-time">15 min</span>
+        <div class="namespace-row">
+          <span class="ns-tag ns-gbp">gbp</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Day 2 Additional Tools (non-playbook items) -->
+    <div style="margin-top: 8px;"></div>
+    <div class="group-container day2" style="border-style: dashed; opacity: 0.85;">
+      <div class="inner-card">
+        <div class="card-icon"><i class="fa-solid fa-eye"></i></div>
+        <div class="card-title">Site Lens</div>
+        <div class="card-description">Visual site audit</div>
+        <div class="namespace-row">
+          <span class="ns-tag ns-otto">otto</span>
+        </div>
+      </div>
+      <div class="inner-card">
+        <div class="card-icon"><i class="fa-solid fa-brain"></i></div>
+        <div class="card-title">DKN Review</div>
+        <div class="card-description">Domain Knowledge Network</div>
+        <div class="namespace-row">
+          <span class="ns-tag ns-content">content_genius</span>
+        </div>
+      </div>
+      <div class="inner-card">
+        <div class="card-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+        <div class="card-title">SCHOLAR</div>
+        <div class="card-description">Semantic content grading</div>
+        <div class="namespace-row">
+          <span class="ns-tag ns-content">content_genius</span>
+        </div>
+      </div>
+      <div class="inner-card">
+        <div class="card-icon"><i class="fa-solid fa-bolt"></i></div>
+        <div class="card-title">URL Indexer</div>
+        <div class="card-description">Submit URLs for rapid indexation</div>
+        <div class="namespace-row">
+          <span class="ns-tag ns-indexer">indexer</span>
+        </div>
+      </div>
+      <div class="inner-card">
+        <div class="card-icon"><i class="fa-regular fa-heart"></i></div>
+        <div class="card-title">Social Schedule</div>
+        <div class="card-description">Automated social posting</div>
+        <div class="namespace-row">
+          <span class="ns-tag ns-gbp">gbp</span>
+        </div>
+      </div>
+      <div class="inner-card">
+        <div class="card-icon"><i class="fa-solid fa-code"></i></div>
+        <div class="card-title">Local Pages</div>
+        <div class="card-description">Website Builder service pages</div>
+        <div class="namespace-row">
+          <span class="ns-tag ns-website">website_studio</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         DAY 3 — BUILD YOUR ALLIANCE NETWORK
+         ═══════════════════════════════════════════════════════════ -->
+    <div class="checkpoint-connector day3">
+      <div class="checkpoint-dot"></div>
+      <div class="connector-line"></div>
+    </div>
+
+    <div class="step-label day3">
+      DAY 3 — BUILD YOUR ALLIANCE NETWORK
+      <span class="step-meta">7 playbooks &middot; 10 action items &middot; ~2 hours &middot; Backlinks, PR, outreach campaigns</span>
+    </div>
+
+    <div class="group-container day3">
+      <!-- Playbook 9 -->
+      <div class="inner-card">
+        <div class="card-icon"><i class="fa-solid fa-vault"></i></div>
+        <div class="card-title">Brand Vault Check</div>
+        <div class="card-description">Verify PR-required fields (author, phone, address)</div>
+        <span class="card-badge badge-time">5 min</span>
+        <div class="namespace-row">
+          <span class="ns-tag ns-otto">orchestrator</span>
+        </div>
+      </div>
+      <!-- Playbook 10 -->
+      <div class="inner-card">
+        <div class="card-icon"><i class="fa-solid fa-newspaper"></i></div>
+        <div class="card-title">Press Releases</div>
+        <div class="card-description">Tier 1 publisher distribution for brand mentions</div>
+        <span class="card-badge badge-time">10 min</span>
+        <div class="namespace-row">
+          <span class="ns-tag ns-pr">press_release</span>
+        </div>
+      </div>
+      <!-- Playbook 11 -->
+      <div class="inner-card">
+        <div class="card-icon"><i class="fa-solid fa-cloud"></i></div>
+        <div class="card-title">Cloud Stack</div>
+        <div class="card-description">Low-cost backlinks on cloud providers</div>
+        <span class="card-badge badge-time">10 min</span>
+        <div class="namespace-row">
+          <span class="ns-tag ns-cloud">cloud_stack</span>
+        </div>
+      </div>
+      <!-- Playbook 12 -->
+      <div class="inner-card">
+        <div class="card-icon"><i class="fa-solid fa-pen-fancy"></i></div>
+        <div class="card-title">Guest Posts</div>
+        <div class="card-description">Editorial placements on relevant publishers</div>
+        <span class="card-badge badge-time">15 min</span>
+        <div class="namespace-row">
+          <span class="ns-tag ns-linklab">linklab</span>
+        </div>
+      </div>
+      <!-- Playbook 13 -->
+      <div class="inner-card">
+        <div class="card-icon"><i class="fa-solid fa-list-check"></i></div>
+        <div class="card-title">Local Citations</div>
+        <div class="card-description">Submit to directory aggregator networks</div>
+        <span class="card-badge badge-time">5 min</span>
+        <div class="namespace-row">
+          <span class="ns-tag ns-gbp">gbp</span>
+        </div>
+      </div>
+      <!-- Playbook 14 -->
+      <div class="inner-card">
+        <div class="card-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+        <div class="card-title">OTTO SEO Deploy</div>
+        <div class="card-description">Fix titles, metas, headings, schema markup</div>
+        <span class="card-badge badge-time">15 min</span>
+        <div class="namespace-row">
+          <span class="ns-tag ns-otto">otto</span>
+        </div>
+      </div>
+      <!-- Playbook 15 -->
+      <div class="inner-card">
+        <div class="card-icon"><i class="fa-solid fa-envelope-open-text"></i></div>
+        <div class="card-title">Publisher Outreach</div>
+        <div class="card-description">Journalist campaigns for editorial backlinks</div>
+        <span class="card-badge badge-time">15 min</span>
+        <div class="namespace-row">
+          <span class="ns-tag ns-pr">digital_pr</span>
+        </div>
+      </div>
+      <!-- Playbook 16 -->
+      <div class="inner-card">
+        <div class="card-icon"><i class="fa-solid fa-handshake"></i></div>
+        <div class="card-title">Business Outreach</div>
+        <div class="card-description">Cold outreach to local businesses for SEO leads</div>
+        <span class="card-badge badge-time">15 min</span>
+        <div class="namespace-row">
+          <span class="ns-tag ns-pr">digital_pr</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Day 3 Additional Tools -->
+    <div style="margin-top: 8px;"></div>
+    <div class="group-container day3" style="border-style: dashed; opacity: 0.85;">
+      <div class="inner-card">
+        <div class="card-icon"><i class="fa-solid fa-chart-simple"></i></div>
+        <div class="card-title">Site Metrics</div>
+        <div class="card-description">Organic keywords, backlinks, competitor landscape</div>
+        <div class="namespace-row">
+          <span class="ns-tag ns-explorer">site_explorer</span>
+        </div>
+      </div>
+      <div class="inner-card">
+        <div class="card-icon"><i class="fa-solid fa-robot"></i></div>
+        <div class="card-title">LLM Prompt Sim</div>
+        <div class="card-description">Test brand visibility across AI platforms</div>
+        <div class="namespace-row">
+          <span class="ns-tag ns-llm">llm_visibility</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         DAY 4 — EXPAND YOUR REACH
+         ═══════════════════════════════════════════════════════════ -->
+    <div class="checkpoint-connector day4">
+      <div class="checkpoint-dot"></div>
+      <div class="connector-line"></div>
+    </div>
+
+    <div class="step-label day4">
+      DAY 4 — EXPAND YOUR REACH
+      <span class="step-meta">Activate paid channels, launch Google Ads, amplify through social</span>
+    </div>
+
+    <div class="group-container day4">
+      <div class="inner-card">
+        <div class="card-icon"><i class="fa-solid fa-bullhorn"></i></div>
+        <div class="card-title">Google Ads / PPC</div>
+        <div class="card-description">AI-powered campaign creation, ad groups, keywords, bids</div>
+        <div class="namespace-row">
+          <span class="ns-tag ns-ppc">otto_ppc</span>
+        </div>
+      </div>
+      <div class="inner-card">
+        <div class="card-icon"><i class="fa-solid fa-rectangle-ad"></i></div>
+        <div class="card-title">Ad Content</div>
+        <div class="card-description">Generate ad copy, headlines, descriptions</div>
+        <div class="namespace-row">
+          <span class="ns-tag ns-ppc">otto_ppc</span>
+        </div>
+      </div>
+      <div class="inner-card">
+        <div class="card-icon"><i class="fa-solid fa-location-dot"></i></div>
+        <div class="card-title">GBP Posts</div>
+        <div class="card-description">Ongoing local posting for engagement</div>
+        <div class="namespace-row">
+          <span class="ns-tag ns-gbp">gbp</span>
+        </div>
+      </div>
+      <div class="inner-card">
+        <div class="card-icon"><i class="fa-regular fa-heart"></i></div>
+        <div class="card-title">Social Amplification</div>
+        <div class="card-description">Cross-platform content distribution</div>
+        <div class="namespace-row">
+          <span class="ns-tag ns-gbp">social</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         DAY 5 — INTELLIGENCE & SCALE
+         ═══════════════════════════════════════════════════════════ -->
+    <div class="checkpoint-connector day5">
+      <div class="checkpoint-dot"></div>
+      <div class="connector-line"></div>
+    </div>
+
+    <div class="step-label day5">
+      DAY 5 — INTELLIGENCE & SCALE
+      <span class="step-meta">Monitor, measure, identify the next territory to conquer</span>
+    </div>
+
+    <div class="group-container day5">
+      <div class="inner-card">
+        <div class="card-icon"><i class="fa-solid fa-robot"></i></div>
+        <div class="card-title">LLM Visibility</div>
+        <div class="card-description">Brand presence across ChatGPT, Gemini, Perplexity, Copilot</div>
+        <div class="namespace-row">
+          <span class="ns-tag ns-llm">llm_visibility</span>
+        </div>
+      </div>
+      <div class="inner-card">
+        <div class="card-icon"><i class="fa-solid fa-chart-line"></i></div>
+        <div class="card-title">Site Explorer</div>
+        <div class="card-description">Organic rankings, traffic trends, competitor gaps</div>
+        <div class="namespace-row">
+          <span class="ns-tag ns-explorer">site_explorer</span>
+        </div>
+      </div>
+      <div class="inner-card">
+        <div class="card-icon"><i class="fa-solid fa-map"></i></div>
+        <div class="card-title">Local Heatmaps</div>
+        <div class="card-description">Geographic rank tracking for local keywords</div>
+        <div class="namespace-row">
+          <span class="ns-tag ns-gbp">local_seo</span>
+        </div>
+      </div>
+      <div class="inner-card">
+        <div class="card-icon"><i class="fa-solid fa-chart-column"></i></div>
+        <div class="card-title">Rankings Monitor</div>
+        <div class="card-description">Position changes, SERP features, indexed pages</div>
+        <div class="namespace-row">
+          <span class="ns-tag ns-explorer">site_explorer</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         FOOTER — TOOL COVERAGE SUMMARY
+         ═══════════════════════════════════════════════════════════ -->
+    <div class="checkpoint-connector" style="margin-bottom: 0;">
+      <div class="checkpoint-dot"></div>
+      <div class="connector-line" style="height: 16px;"></div>
+    </div>
+
+    <div style="
+      margin-top: 8px;
+      padding: 20px 32px;
+      background: rgba(147, 107, 218, 0.04);
+      border: 1px solid rgba(147, 107, 218, 0.08);
+      border-radius: 16px;
+      text-align: center;
+      max-width: 900px;
+    ">
+      <div style="font-size: 13px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">
+        MCP Tool Coverage by Category
+      </div>
+      <div style="display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;">
+        <span class="ns-tag ns-otto" style="font-size: 11px; padding: 4px 10px;">OTTO SEO &middot; 15 tools</span>
+        <span class="ns-tag ns-ppc" style="font-size: 11px; padding: 4px 10px;">PPC / Ads &middot; 13 tools</span>
+        <span class="ns-tag ns-gbp" style="font-size: 11px; padding: 4px 10px;">GBP &middot; 16 tools</span>
+        <span class="ns-tag ns-content" style="font-size: 11px; padding: 4px 10px;">Content Genius &middot; 7 tools</span>
+        <span class="ns-tag ns-explorer" style="font-size: 11px; padding: 4px 10px;">Site Explorer &middot; 8 tools</span>
+        <span class="ns-tag ns-llm" style="font-size: 11px; padding: 4px 10px;">LLM Visibility &middot; 8 tools</span>
+        <span class="ns-tag ns-gbp" style="font-size: 11px; padding: 4px 10px;">Local SEO &middot; 7 tools</span>
+        <span class="ns-tag ns-pr" style="font-size: 11px; padding: 4px 10px;">Digital PR &middot; 4 tools</span>
+        <span class="ns-tag ns-pr" style="font-size: 11px; padding: 4px 10px;">Press Release &middot; 4 tools</span>
+        <span class="ns-tag ns-cloud" style="font-size: 11px; padding: 4px 10px;">Cloud Stack &middot; 4 tools</span>
+        <span class="ns-tag ns-linklab" style="font-size: 11px; padding: 4px 10px;">LinkLab &middot; 4 tools</span>
+        <span class="ns-tag ns-website" style="font-size: 11px; padding: 4px 10px;">Website Studio &middot; 1 tool</span>
+        <span class="ns-tag ns-content" style="font-size: 11px; padding: 4px 10px;">Brand Vault &middot; 1 tool</span>
+      </div>
+      <div style="margin-top: 12px; font-size: 11px; color: var(--text-secondary);">
+        AI Search & Agentic Marketing Summit &middot; February 2026 &middot; searchatlas.com
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>
