@@ -160,6 +160,9 @@ Generate topical authority maps, create AI-optimized articles at scale, publish 
 README.md                          # This file — your omnichannel marketing guide
 CLAUDE.md                          # Project context for Claude Code agents
 AGENT_PLAYBOOK.md                  # Golden rules, full 112-tool registry, verified schemas
+searchatlas_cli.py                 # CLI client — 13 commands, 112 tools at your fingertips
+requirements.txt                   # Python dependencies (click, httpx, rich)
+.env.example                       # Template for MCP_API_KEY
 summit-challenge-playbooks.json    # 15 ready-to-run agentic marketing playbooks
 playbook-of-playbooks.html         # Interactive visual diagram of the full 5-day challenge
 EXECUTION_REPORT.md                # Historical log from 4 execution runs (40% -> 78%)
@@ -193,6 +196,73 @@ See [`AGENT_PLAYBOOK.md`](AGENT_PLAYBOOK.md) for the full battle manual.
    ./discover_tools.sh
    ```
 4. Start marketing.
+
+## CLI Installation
+
+The `searchatlas_cli.py` provides a rich terminal interface to all 112 MCP tools — no curl required.
+
+```bash
+pip install -r requirements.txt
+cp .env.example .env   # then add your MCP_API_KEY
+```
+
+### Usage
+
+```bash
+# List all 112 tools (live from MCP server)
+python searchatlas_cli.py tools
+
+# Filter tools by category (offline, instant)
+python searchatlas_cli.py tools --category otto
+python searchatlas_cli.py tools --category geo
+
+# Discover the real schema for any tool + operation
+python searchatlas_cli.py discover project_management list_otto_projects
+
+# Execute a tool call
+python searchatlas_cli.py call project_management list_otto_projects
+python searchatlas_cli.py call brand_vault get_brand_vault_overview -p '{"hostname":"searchatlas.com"}'
+
+# Dry-run mode — see the JSON-RPC payload without sending
+python searchatlas_cli.py call seo_analysis get_project_issues_summary --dry-run
+
+# Check async task status (with optional polling)
+python searchatlas_cli.py status <task_id> --poll --timeout 120
+
+# Category shortcuts — fewer keystrokes for common operations
+python searchatlas_cli.py brand list_brand_vaults
+python searchatlas_cli.py otto project_management list_otto_projects
+python searchatlas_cli.py geo get_brand_overview -p '{"hostname":"searchatlas.com"}'
+python searchatlas_cli.py gbp gbp_locations_crud list_locations
+python searchatlas_cli.py ppc business_crud list_all
+python searchatlas_cli.py site projects list_sites
+python searchatlas_cli.py content content_generation topic_suggestions
+
+# Summit challenge playbooks (15 ready-to-run workflows)
+python searchatlas_cli.py playbook list
+python searchatlas_cli.py playbook show 3
+python searchatlas_cli.py playbook run 1
+```
+
+### All 13 Commands
+
+| Command | Description |
+|---------|-------------|
+| `tools` | List all 112 MCP tools or filter by category |
+| `discover` | Schema discovery via empty call (Golden Rule 1) |
+| `call` | Execute any MCP tool call (with `--dry-run` support) |
+| `status` | Check or poll async task status |
+| `wait` | Server-side wait (OTTO/PPC) |
+| `playbook list` | List all 15 summit challenge playbooks |
+| `playbook show` | Show playbook details |
+| `playbook run` | Extract execution plan from a playbook |
+| `brand` | Brand Vault shortcut |
+| `otto` | OTTO SEO shortcut |
+| `geo` | LLM Visibility / GEO shortcut |
+| `gbp` | Google Business Profile shortcut |
+| `ppc` | PPC / Google Ads shortcut |
+| `site` | Site Explorer shortcut |
+| `content` | Content Genius shortcut |
 
 ## About SearchAtlas
 
